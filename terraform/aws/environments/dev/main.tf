@@ -1,1 +1,1 @@
-../common/main.tf
+../shared/main.tf
