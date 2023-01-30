@@ -1,1 +1,1 @@
-# terraform-project-template
+# oidc-aws-github-terraform
