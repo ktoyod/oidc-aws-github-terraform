@@ -1,4 +1,4 @@
 variable "github_repos" {
-  description = "List of GitHub repositories to grant access to"
+  description = "The list of GitHub repositories allowed to assume the role"
   type        = list(string)
 }
