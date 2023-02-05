@@ -1,0 +1,27 @@
+name: terraform-apply
+author: ktoyod
+description: execute terraform apply
+inputs:
+  terraform-exec-directory:
+    description: The directory where terraform is executed
+    required: true
+  terraform-version:
+    description: The version of terraform to use
+    required: true
+    default: 1.3.7
+
+runs:
+  using: composite
+  steps:
+    - name: setup terraform
+      uses: hashicorp/setup-terraform@v2
+      with:
+        terraform_version: ${{ inputs.terraform-version }}
+    - name: terraform init
+      shell: bash
+      run: terraform init
+      working-directory: ${{ inputs.terraform-exec-directory }}
+    - name: terraform apply
+      shell: bash
+      run: terraform apply -auto-approve
+      working-directory: ${{ inputs.terraform-exec-directory }}
