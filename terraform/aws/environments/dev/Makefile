@@ -16,5 +16,4 @@ plan:
 
 .PHONY: apply
 apply:
-	terraform apply
-
+	terraform apply --auto-approve

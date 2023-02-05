@@ -1,1 +1,1 @@
-../common/terraform.tfvars
+../shared/terraform.tfvars

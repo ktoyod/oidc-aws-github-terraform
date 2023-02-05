@@ -3,7 +3,7 @@
 set -eux
 
 region="ap-northeast-1"
-bucket_name="ktoyod-terraform-template-dev"
+bucket_name="oidc-aws-terraform-state-dev"
 
 aws s3api create-bucket \
   --bucket ${bucket_name} \
