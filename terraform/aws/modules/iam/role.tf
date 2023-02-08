@@ -24,7 +24,7 @@ data "aws_iam_policy_document" "oidc_assume_role_policy" {
 
 resource "aws_iam_role" "oidc_role" {
   name               = "oidc_role"
-  assume_role_policy = data.aws_iam_policy_document.oidc_assume_role_policy
+  assume_role_policy = data.aws_iam_policy_document.oidc_assume_role_policy.json
 }
 
 resource "aws_iam_role_policy_attachment" "oidc_role_policy" {
