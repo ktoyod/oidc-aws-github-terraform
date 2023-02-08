@@ -4,27 +4,27 @@ locals {
   ])
 }
 
-resource "aws_iam_role" "oidc_role" {
-  name = "oidc_role"
-  assume_role_policy = jsonencode(
-    {
-      "Version" : "2012-10-17",
-      "Statement" : [
-        {
-          "Effect" : "Allow",
-          "Principal" : {
-            "Federated" : aws_iam_openid_connect_provider.github.arn
-          },
-          "Action" : "sts:AssumeRoleWithWebIdentity",
-          "Condition" : {
-            "ForAllValues:StringLike" : {
-              "${aws_iam_openid_connect_provider.github.url}:sub" : local.sub_conditions
-            }
-          }
-        }
-      ]
+data "aws_iam_policy_document" "oidc_assume_role_policy" {
+  statement {
+    effect  = "Allow"
+    actions = ["sts:AssumeRoleWithWebIdentity"]
+
+    principals {
+      type        = "Federated"
+      identifiers = [aws_iam_openid_connect_provider.github.arn]
     }
-  )
+
+    condition {
+      test     = "ForAllValues:StringLike"
+      variable = "${aws_iam_openid_connect_provider.github.url}:sub"
+      values   = local.sub_conditions
+    }
+  }
+}
+
+resource "aws_iam_role" "oidc_role" {
+  name               = "oidc_role"
+  assume_role_policy = data.aws_iam_policy_document.oidc_assume_role_policy
 }
 
 resource "aws_iam_role_policy_attachment" "oidc_role_policy" {
